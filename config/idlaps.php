@@ -49,6 +49,16 @@ return [
             'article_url' => 'https://www.idlaps.com/berita/idlaps-berkolaborasi-dengan-starfit-eo-menyukseskan-starfit-fun-run-2025-bsd/', 'featured' => true,
         ],
         [
+            'slug' => 'midea-run-to-party-2024', 'name' => 'Midea Run To Party', 'sport' => 'Running', 'year' => '2024', 'date' => '8 November 2024',
+            'location' => 'PIER 503, Ebony PIK', 'image' => '/media/midea-run-to-party-2024-start.jpg', 'image_position' => 'center 55%', 'categories' => ['5K', '10K'],
+            'description' => 'Midea Run To Party berlangsung pada 8 November 2024 di PIER 503, Ebony PIK. Dokumentasi menampilkan area lintasan dan perangkat pencatatan waktu untuk kategori 5K dan 10K. Hasil lomba dapat diakses melalui halaman result IDLAPS.',
+            'gallery' => [
+                ['image' => '/media/midea-run-to-party-2024-start.jpg', 'alt' => 'Area lintasan Midea Run To Party dengan penanda kategori 5K dan 10K', 'caption' => 'Area lintasan Midea Run To Party di PIER 503, Ebony PIK.'],
+                ['image' => '/media/midea-run-to-party-2024-timing.jpg', 'alt' => 'Jam lomba di samping penanda kategori 5K Midea Run To Party', 'caption' => 'Dokumentasi jam lomba dan penanda kategori 5K.'],
+            ],
+            'result_url' => 'https://midearuntoparty.idlaps.com/', 'article_url' => null, 'featured' => false,
+        ],
+        [
             'slug' => 'tkg-half-marathon-2024', 'name' => 'TKG Half Marathon 2024', 'sport' => 'Running', 'year' => '2024', 'date' => '2024',
             'location' => 'Bandar Lampung, Lampung', 'image' => '/media/tkg.jpg', 'categories' => ['Half marathon'],
             'description' => 'Dokumentasi layanan IDLAPS pada TKG Half Marathon 2024 di Bandar Lampung. Hasil event dapat ditemukan melalui arsip result IDLAPS.',
