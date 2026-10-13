@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#101210">
     <title>@yield('title', 'IDLAPS — Race Timing untuk Setiap Format Event')</title>
-    <meta name="description" content="@yield('description', 'Layanan race timing, BIB dan chip, registrasi, serta hasil lomba untuk event olahraga di seluruh Indonesia. Sesuaikan kebutuhan event Anda bersama IDLAPS.')">
+    <meta name="description" content="@yield('description', 'Layanan race timing untuk lari, sepeda, dan triathlon di seluruh Indonesia, dilengkapi BIB dan chip, registrasi, serta hasil lomba. Sesuaikan kebutuhan event Anda bersama IDLAPS.')">
     <meta name="robots" content="{{ config('idlaps.indexable') && !request()->routeIs('results.demo') ? 'index, follow' : 'noindex, nofollow' }}">
     <link rel="canonical" href="{{ url()->current() }}">
     <meta property="og:title" content="@yield('title', 'IDLAPS — Setiap Detik Berarti')">
@@ -22,7 +22,7 @@
     <div class="utility-bar"><div class="shell utility-inner"><span><i class="status-dot"></i> CUSTOM YOUR RACE</span><span>RACE TIMING PARTNER <b> / </b> INDONESIA</span><a href="{{ route('contact') }}">Let’s talk race <x-icon /></a></div></div>
     <header class="site-header">
         <div class="shell header-inner">
-            <a class="brand" href="{{ route('home') }}" aria-label="IDLAPS beranda"><img src="{{ asset('media/logo.png') }}" width="130" height="57" alt="IDLAPS — Custom Your Race"></a>
+            <a class="brand" href="{{ route('home') }}" aria-label="IDLAPS beranda"><img src="{{ asset('media/idlaps-logo-updated.jpeg') }}" width="1600" height="800" alt="IDLAPS — Custom Your Race"></a>
             <nav class="desktop-nav" aria-label="Navigasi utama">
                 <a href="{{ route('home') }}#layanan">Layanan</a>
                 <a href="{{ route('events.index') }}" @class(['active' => request()->routeIs('events.*')])>Event</a>
@@ -39,7 +39,7 @@
     </header>
     <main id="main">@yield('content')</main>
     <footer class="site-footer">
-        <div class="shell footer-top"><a href="{{ route('home') }}" class="brand"><img src="{{ asset('media/logo.png') }}" alt="IDLAPS" width="130" height="57" loading="lazy"></a><p>Your race. Your format.<br><span>Our commitment.</span></p><a href="mailto:{{ config('idlaps.contact_email') }}">{{ config('idlaps.contact_email') }} <x-icon /></a></div>
+        <div class="shell footer-top"><a href="{{ route('home') }}" class="brand"><img src="{{ asset('media/idlaps-logo-updated.jpeg') }}" alt="IDLAPS" width="1600" height="800" loading="lazy"></a><p>Your race. Your format.<br><span>Our commitment.</span></p><a href="mailto:{{ config('idlaps.contact_email') }}">{{ config('idlaps.contact_email') }} <x-icon /></a></div>
         <div class="shell footer-bottom"><span>© {{ date('Y') }} IDLAPS Timing System.</span><span>Bukit Batu JPG MTB Trail Park · Indonesia</span><a href="{{ route('results.index') }}">Temukan hasil lomba <x-icon name="arrow-right" /></a></div>
     </footer>
     @stack('scripts')
