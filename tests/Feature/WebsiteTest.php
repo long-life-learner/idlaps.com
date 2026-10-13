@@ -8,7 +8,7 @@ use Tests\TestCase;
 class WebsiteTest extends TestCase
 {
     #[TestWith(['/event', 'INI RUN FEST 2026'])]
-    #[TestWith(['/hasil', 'https://inirun.idlaps.com/results.html'])]
+    #[TestWith(['/hasil', 'https://inirun.idlaps.com/'])]
     #[TestWith(['/berita', 'Cosmo Run 2026'])]
     #[TestWith(['/konsultasi', 'admin@idlaps.com'])]
     public function test_public_pages_render_useful_content_without_javascript(string $path, string $content): void
@@ -21,7 +21,7 @@ class WebsiteTest extends TestCase
         $this->get('/event/ini-run-fest-2026')
             ->assertOk()
             ->assertSee('AEON Mall Deltamas, Cikarang')
-            ->assertSee('https://inirun.idlaps.com/results.html');
+            ->assertSee('https://inirun.idlaps.com/');
     }
 
     public function test_event_without_results_does_not_invent_a_result_link(): void

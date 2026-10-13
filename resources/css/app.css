@@ -20,12 +20,12 @@ input[type="search"]::-webkit-search-cancel-button{display:none}
 .event-gallery-section { padding-bottom: 100px; }
 .event-gallery { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
 .event-gallery figure { margin: 0; min-width: 0; }
-.event-gallery figure:last-child { grid-column: 2; grid-row: 1 / span 2; }
+.event-gallery figure:nth-child(3):last-child { grid-column: 2; grid-row: 1 / span 2; }
 .event-gallery a { display: block; overflow: hidden; background: var(--surface); }
 .event-gallery img { width: 100%; height: auto; }
 .event-gallery figcaption { margin-top: 12px; font-size: 11px; color: var(--muted); line-height: 1.7; }
 @media (max-width: 600px) {
     .event-gallery-section { padding-bottom: 64px; }
     .event-gallery { grid-template-columns: 1fr; gap: 28px; }
-    .event-gallery figure:last-child { grid-column: auto; grid-row: auto; }
+    .event-gallery figure:nth-child(3):last-child { grid-column: auto; grid-row: auto; }
 }

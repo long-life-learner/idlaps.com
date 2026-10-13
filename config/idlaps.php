@@ -17,9 +17,13 @@ return [
         ],
         [
             'slug' => 'ini-run-fest-2026', 'name' => 'INI RUN FEST 2026', 'sport' => 'Running', 'year' => '2026', 'date' => '28 Juni 2026',
-            'location' => 'AEON Mall Deltamas, Cikarang', 'image' => null, 'categories' => ['5K', 'Kid Dash'],
-            'description' => 'INI RUN FEST 2026 di AEON Mall Deltamas, Cikarang. Dipersembahkan oleh Pengda Kabupaten Bekasi Ikatan Notaris Indonesia dan diselenggarakan oleh JBR Race Management.',
-            'result_url' => 'https://inirun.idlaps.com/results.html', 'article_url' => null, 'featured' => false,
+            'location' => 'AEON Mall Deltamas, Cikarang', 'image' => '/media/ini-run-fest-2026-start.jpg', 'image_position' => 'center 25%', 'categories' => ['5K', 'Kid Dash'],
+            'description' => 'INI RUN FEST 2026 berlangsung pada 28 Juni 2026 di AEON Mall Deltamas, Cikarang. Dipersembahkan oleh Pengda Kabupaten Bekasi Ikatan Notaris Indonesia dan diselenggarakan oleh JBR Race Management. Dokumentasi event dan akses hasil lomba tersedia di halaman ini.',
+            'gallery' => [
+                ['image' => '/media/ini-run-fest-2026-start.jpg', 'alt' => 'Kolase peserta di garis start dan suasana panggung INI Run Fest 2026', 'caption' => 'Momen di garis start dan panggung INI Run Fest 2026.'],
+                ['image' => '/media/ini-run-fest-2026-timing.jpg', 'alt' => 'Perangkat pencatatan waktu di dekat garis start INI Run Fest 2026', 'caption' => 'Dokumentasi perangkat timing dan suasana area start.'],
+            ],
+            'result_url' => 'https://inirun.idlaps.com/', 'article_url' => null, 'featured' => true,
         ],
         [
             'slug' => 'cosmo-run-2026', 'name' => 'Cosmo Run 2026', 'sport' => 'Running', 'year' => '2026', 'date' => '1 Februari 2026',

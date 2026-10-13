@@ -29,7 +29,7 @@ function reset() { query.value = ''; sport.value = ''; year.value = ''; }
     <div v-else-if="mode === 'events'" class="event-grid">
         <article v-for="event in filtered" :key="event.slug" class="event-card">
             <a :href="event.url" class="event-photo" :class="{ 'event-photo-graphic': !event.image }" :aria-label="`Lihat ${event.name}`">
-                <img v-if="event.image" :src="event.image" :alt="`Dokumentasi ${event.name}`" loading="lazy" width="640" height="460" />
+                <img v-if="event.image" :src="event.image" :style="{ objectPosition: event.image_position || 'center' }" :alt="`Dokumentasi ${event.name}`" loading="lazy" width="640" height="460" />
                 <span v-else class="graphic-event-title">INI RUN<br><em>FEST.</em></span>
                 <span class="image-badge">{{ event.sport }}</span><span class="card-arrow"><ArrowUpRight :size="20" /></span>
             </a>
@@ -40,7 +40,7 @@ function reset() { query.value = ''; sport.value = ''; year.value = ''; }
     </div>
     <div v-else class="result-event-list">
         <article v-for="event in filtered" :key="event.slug" class="result-event-row">
-            <img v-if="event.image" :src="event.image" :alt="`Dokumentasi ${event.name}`" class="result-event-image" width="120" height="80" loading="lazy" />
+            <img v-if="event.image" :src="event.image" :style="{ objectPosition: event.image_position || 'center' }" :alt="`Dokumentasi ${event.name}`" class="result-event-image" width="120" height="80" loading="lazy" />
             <div v-else class="result-event-image event-photo-graphic" aria-hidden="true">INI RUN.</div>
             <div class="result-event-content"><p class="eyebrow">{{ event.sport }} / {{ event.date }}</p><h3><a :href="event.url">{{ event.name }}</a></h3><p class="location"><MapPin :size="13" aria-hidden="true" /> {{ event.location }}</p></div>
             <span class="result-event-year">{{ event.year }}</span><a :href="event.result_url" target="_blank" rel="noopener" class="button button-outline" :aria-label="`Buka hasil ${event.name} di tab baru`">Lihat hasil <ArrowUpRight :size="16" /></a>
