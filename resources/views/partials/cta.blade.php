@@ -1,0 +1,1 @@
+<section class="contact-cta"><div class="shell"><div><p class="eyebrow">YOUR NEXT GREAT RACE STARTS HERE.</p><h2>SIAP MEMBUAT<br>EVENT BERIKUTNYA?</h2></div><a class="button" href="{{ route('contact') }}">Mari bicarakan event Anda <x-icon /></a></div></section>
