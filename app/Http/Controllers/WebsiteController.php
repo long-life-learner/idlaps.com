@@ -12,7 +12,7 @@ class WebsiteController extends Controller
     public function home(): View
     {
         return view('home', [
-            'events' => $this->catalogue->all()->where('featured', true),
+            'events' => $this->catalogue->all()->where('featured', true)->take(3),
             'articles' => $this->catalogue->all()->whereNotNull('article_url'),
         ]);
     }

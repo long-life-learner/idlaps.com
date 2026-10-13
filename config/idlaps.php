@@ -5,6 +5,17 @@ return [
     'contact_email' => 'admin@idlaps.com',
     'events' => [
         [
+            'slug' => 'kopi-toebroek-69-xcm-50k-2026', 'name' => 'Kopi Toebroek 69 XCM 50K Race', 'sport' => 'Cycling', 'year' => '2026', 'date' => '16 Agustus 2026',
+            'location' => 'AEON Mall Deltamas, Cikarang', 'image' => '/media/kopi-toebroek-2026-start.jpg', 'categories' => ['MTB XCM', '50K'],
+            'description' => 'Kopi Toebroek 69 XCM 50K Race berlangsung pada 16 Agustus 2026 di AEON Mall Deltamas, Cikarang. Event sepeda gunung dengan format cross-country marathon sejauh 50 kilometer ini menjadi bagian dari dokumentasi layanan IDLAPS.',
+            'gallery' => [
+                ['image' => '/media/kopi-toebroek-2026-start.jpg', 'alt' => 'Area start dengan peserta sepeda dan perangkat pencatatan waktu', 'caption' => 'Suasana area start Kopi Toebroek 69 XCM 50K Race.'],
+                ['image' => '/media/kopi-toebroek-2026-event.jpg', 'alt' => 'Backdrop Kopi Toebroek 69 MTB XC Marathon 2026', 'caption' => 'Identitas event dan para pendukung penyelenggaraan.'],
+                ['image' => '/media/kopi-toebroek-2026-peserta.jpg', 'alt' => 'Peserta sepeda bersiap di belakang bendera start', 'caption' => 'Peserta bersiap memulai lomba di AEON Mall Deltamas.'],
+            ],
+            'result_url' => null, 'article_url' => null, 'featured' => true,
+        ],
+        [
             'slug' => 'ini-run-fest-2026', 'name' => 'INI RUN FEST 2026', 'sport' => 'Running', 'year' => '2026', 'date' => '28 Juni 2026',
             'location' => 'AEON Mall Deltamas, Cikarang', 'image' => null, 'categories' => ['5K', 'Kid Dash'],
             'description' => 'INI RUN FEST 2026 di AEON Mall Deltamas, Cikarang. Dipersembahkan oleh Pengda Kabupaten Bekasi Ikatan Notaris Indonesia dan diselenggarakan oleh JBR Race Management.',

@@ -14,7 +14,7 @@
     <meta property="og:locale" content="id_ID">
     <meta property="og:url" content="{{ url()->current() }}">
     <meta property="og:image" content="{{ asset('media/bukit-batu.jpg') }}">
-    <link rel="icon" type="image/svg+xml" href="{{ asset('favicon.svg') }}">
+    <link rel="icon" type="image/svg+xml" href="{{ asset('favicon.svg?v=2') }}">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body>
