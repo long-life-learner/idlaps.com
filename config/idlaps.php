@@ -26,6 +26,15 @@ return [
             'result_url' => 'https://inirun.idlaps.com/', 'article_url' => null, 'featured' => true,
         ],
         [
+            'slug' => 'gunung-madu-half-marathon-2026', 'name' => 'Gunung Madu Half Marathon 2026', 'sport' => 'Running', 'year' => '2026', 'date' => '26 April 2026',
+            'location' => 'Stadion Pahoman, Bandar Lampung', 'image' => '/media/gunung-madu-half-marathon-2026.jpg', 'image_position' => 'center 35%', 'categories' => ['Half marathon'],
+            'description' => 'Gunung Madu Half Marathon 2026 berlangsung pada 26 April 2026 di Stadion Pahoman, Bandar Lampung. Lihat dokumentasi event dan akses hasil lomba melalui halaman result IDLAPS.',
+            'gallery' => [
+                ['image' => '/media/gunung-madu-half-marathon-2026.jpg', 'alt' => 'Area lintasan dan perangkat timing Gunung Madu Half Marathon 2026 di Stadion Pahoman', 'caption' => 'Dokumentasi area event Gunung Madu Half Marathon 2026 di Stadion Pahoman, Bandar Lampung.'],
+            ],
+            'result_url' => 'https://gunungmaduhalfmarathon.idlaps.com/', 'article_url' => null, 'featured' => true,
+        ],
+        [
             'slug' => 'cosmo-run-2026', 'name' => 'Cosmo Run 2026', 'sport' => 'Running', 'year' => '2026', 'date' => '1 Februari 2026',
             'location' => 'District 1 Meikarta', 'image' => '/media/cosmo.webp', 'categories' => ['Running event'],
             'description' => 'IDLAPS berkolaborasi dengan JBR Race Management dalam penyelenggaraan Cosmo Run 2026 di District 1 Meikarta. Dokumentasi dan liputan event tersedia di IDLAPS Sport News.',
