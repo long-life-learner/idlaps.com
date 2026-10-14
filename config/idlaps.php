@@ -38,7 +38,7 @@ return [
             'slug' => 'cosmo-run-2026', 'name' => 'Cosmo Run 2026', 'sport' => 'Running', 'year' => '2026', 'date' => '1 Februari 2026',
             'location' => 'District 1 Meikarta', 'image' => '/media/cosmo.webp', 'categories' => ['Running event'],
             'description' => 'IDLAPS berkolaborasi dengan JBR Race Management dalam penyelenggaraan Cosmo Run 2026 di District 1 Meikarta. Dokumentasi dan liputan event tersedia di IDLAPS Sport News.',
-            'result_url' => 'https://cosmorun.idlaps.com',
+            'result_url' => 'https://cosmorun2026.idlaps.com/',
             'article_url' => 'https://www.idlaps.com/berita/cosmo-run-2026-sukses-digelar-di-district-1-meikarta-kolaborasi-idlaps-dan-jbr-race-management/', 'featured' => true,
         ],
         [
@@ -47,6 +47,16 @@ return [
             'description' => 'Starfit Fun Run mempertemukan komunitas lari dalam kategori 5K dan 10K. IDLAPS berkolaborasi dengan Starfit EO untuk mendukung penyelenggaraan event di BSD.',
             'result_url' => 'https://starfit-run.idlaps.com',
             'article_url' => 'https://www.idlaps.com/berita/idlaps-berkolaborasi-dengan-starfit-eo-menyukseskan-starfit-fun-run-2025-bsd/', 'featured' => true,
+        ],
+        [
+            'slug' => 'anniversarace-5-tahun-jonggol-bersepeda-2025', 'name' => 'ANNIVERSARACE 5 TAHUN JONGGOL BERSEPEDA', 'sport' => 'Cycling', 'year' => '2025', 'date' => '25 Mei 2025',
+            'location' => 'Jonggol, Bogor', 'image' => '/media/jonggol-anniversarace-2025-start.jpg', 'image_position' => 'center 65%', 'categories' => ['Sepeda'],
+            'description' => 'ANNIVERSARACE 5 TAHUN JONGGOL BERSEPEDA berlangsung pada 25 Mei 2025 di Jonggol, Bogor. Dokumentasi event menampilkan suasana lintasan dan perangkat pencatatan waktu di area lomba.',
+            'gallery' => [
+                ['image' => '/media/jonggol-anniversarace-2025-start.jpg', 'alt' => 'Area lintasan ANNIVERSARACE 5 TAHUN JONGGOL BERSEPEDA dengan perangkat timing', 'caption' => 'Dokumentasi area lomba di Jonggol, Bogor.'],
+                ['image' => '/media/jonggol-anniversarace-2025-timing.jpg', 'alt' => 'Perangkat pencatatan waktu di lintasan Jonggol Bersepeda Bike Track', 'caption' => 'Perangkat timing dan suasana lintasan Jonggol Bersepeda.'],
+            ],
+            'result_url' => null, 'article_url' => null, 'featured' => false,
         ],
         [
             'slug' => 'midea-run-to-party-2024', 'name' => 'Midea Run To Party', 'sport' => 'Running', 'year' => '2024', 'date' => '8 November 2024',
