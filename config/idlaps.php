@@ -49,6 +49,16 @@ return [
             'article_url' => 'https://www.idlaps.com/berita/idlaps-berkolaborasi-dengan-starfit-eo-menyukseskan-starfit-fun-run-2025-bsd/', 'featured' => true,
         ],
         [
+            'slug' => 'jpm-pro-race-2025-sumpah-pemuda', 'name' => 'JPM PRO RACE 2025 SUMPAH PEMUDA', 'sport' => 'Cycling', 'year' => '2025', 'date' => '25 Oktober 2025',
+            'location' => 'Pamulang, Tangerang Selatan', 'image' => '/media/jpm-pro-race-2025-start.jpg', 'image_position' => 'center 65%', 'categories' => ['MTB'],
+            'description' => 'JPM PRO RACE 2025 SUMPAH PEMUDA berlangsung pada 25 Oktober 2025 di Pamulang, Tangerang Selatan. Dokumentasi menampilkan para peserta sepeda gunung yang bersiap di garis start. Hasil lomba tersedia melalui halaman result IDLAPS.',
+            'gallery' => [
+                ['image' => '/media/jpm-pro-race-2025-kolase.webp', 'alt' => 'Kolase peserta dan pelepasan start JPM PRO RACE 2025 SUMPAH PEMUDA', 'caption' => 'Momen peserta bersiap dan pelepasan start JPM PRO RACE 2025 SUMPAH PEMUDA.'],
+                ['image' => '/media/jpm-pro-race-2025-start.jpg', 'alt' => 'Peserta sepeda gunung dan perangkat timing di garis start JPM PRO RACE 2025', 'caption' => 'Suasana garis start di Pamulang, Tangerang Selatan.'],
+            ],
+            'result_url' => 'https://jpm.idlaps.com/', 'article_url' => null, 'featured' => false,
+        ],
+        [
             'slug' => 'anniversarace-5-tahun-jonggol-bersepeda-2025', 'name' => 'ANNIVERSARACE 5 TAHUN JONGGOL BERSEPEDA', 'sport' => 'Cycling', 'year' => '2025', 'date' => '25 Mei 2025',
             'location' => 'Jonggol, Bogor', 'image' => '/media/jonggol-anniversarace-2025-start.jpg', 'image_position' => 'center 65%', 'categories' => ['Sepeda'],
             'description' => 'ANNIVERSARACE 5 TAHUN JONGGOL BERSEPEDA berlangsung pada 25 Mei 2025 di Jonggol, Bogor. Dokumentasi event menampilkan suasana lintasan dan perangkat pencatatan waktu di area lomba.',
