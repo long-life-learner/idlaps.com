@@ -31,6 +31,7 @@ return [
             'description' => 'Gunung Madu Half Marathon 2026 berlangsung pada 26 April 2026 di Stadion Pahoman, Bandar Lampung. Lihat dokumentasi event dan akses hasil lomba melalui halaman result IDLAPS.',
             'gallery' => [
                 ['image' => '/media/gunung-madu-half-marathon-2026.jpg', 'alt' => 'Area lintasan dan perangkat timing Gunung Madu Half Marathon 2026 di Stadion Pahoman', 'caption' => 'Dokumentasi area event Gunung Madu Half Marathon 2026 di Stadion Pahoman, Bandar Lampung.'],
+                ['image' => '/media/gunung-madu-2026-finisher.jpg', 'alt' => 'Dokumentasi finisher dengan medali dan sertifikat Gunung Madu Half Marathon 2026', 'caption' => 'Momen finisher di Gunung Madu Half Marathon 2026.'],
             ],
             'result_url' => 'https://gunungmaduhalfmarathon.idlaps.com/', 'article_url' => null, 'featured' => true,
         ],
@@ -67,6 +68,15 @@ return [
                 ['image' => '/media/jonggol-anniversarace-2025-timing.jpg', 'alt' => 'Perangkat pencatatan waktu di lintasan Jonggol Bersepeda Bike Track', 'caption' => 'Perangkat timing dan suasana lintasan Jonggol Bersepeda.'],
             ],
             'result_url' => null, 'article_url' => null, 'featured' => false,
+        ],
+        [
+            'slug' => 'locomotive-run-2025', 'name' => 'Locomotive Run 2025', 'sport' => 'Running', 'year' => '2025', 'date' => '27 April 2025',
+            'location' => 'Stasiun Tanjungkarang, Bandar Lampung', 'image' => '/media/locomotive-run-2025-finisher.jpg', 'image_position' => 'center 25%', 'categories' => ['5K'],
+            'description' => 'Locomotive Run 2025 berlangsung pada 27 April 2025 di Stasiun Tanjungkarang, Bandar Lampung. Lihat dokumentasi peserta dan akses hasil lomba melalui halaman result IDLAPS.',
+            'gallery' => [
+                ['image' => '/media/locomotive-run-2025-finisher.jpg', 'alt' => 'Dokumentasi peserta dan sertifikat finisher kategori 5K Locomotive Run 2025', 'caption' => 'Dokumentasi peserta Locomotive Run 2025 di Bandar Lampung.'],
+            ],
+            'result_url' => 'https://locomotiverun.idlaps.com/', 'article_url' => null, 'featured' => false,
         ],
         [
             'slug' => 'midea-run-to-party-2024', 'name' => 'Midea Run To Party', 'sport' => 'Running', 'year' => '2024', 'date' => '8 November 2024',
