@@ -6,6 +6,7 @@ const props = defineProps({ events: { type: Array, required: true }, mode: { typ
 const query = ref('');
 const sport = ref('');
 const year = ref('');
+const sports = computed(() => [['', 'Semua'], ...[...new Set(props.events.map(event => event.sport))].sort().map(sport => [sport, sport])]);
 const years = computed(() => [...new Set(props.events.map(event => event.year))].sort().reverse());
 const filtered = computed(() => filterEvents(props.events, { query: query.value, sport: sport.value, year: year.value }));
 const hasFilters = computed(() => query.value || sport.value || year.value);
@@ -20,7 +21,7 @@ function reset() { query.value = ''; sport.value = ''; year.value = ''; }
             <button v-if="query" class="search-clear" @click="query = ''" aria-label="Hapus pencarian"><X /></button>
         </div>
         <div class="filter-chips" aria-label="Jenis olahraga">
-            <button v-for="item in [['', 'Semua'], ['Running', 'Running'], ['Cycling', 'Cycling']]" :key="item[0]" :class="{ selected: sport === item[0] }" :aria-pressed="sport === item[0]" @click="sport = item[0]">{{ item[1] }}</button>
+            <button v-for="item in sports" :key="item[0]" :class="{ selected: sport === item[0] }" :aria-pressed="sport === item[0]" @click="sport = item[0]">{{ item[1] }}</button>
         </div>
         <div class="filter-selects"><label><span>Tahun event</span><select v-model="year" aria-label="Tahun event"><option value="">Semua tahun</option><option v-for="item in years" :key="item">{{ item }}</option></select></label></div>
     </div>
@@ -30,10 +31,10 @@ function reset() { query.value = ''; sport.value = ''; year.value = ''; }
         <article v-for="event in filtered" :key="event.slug" class="event-card">
             <a :href="event.url" class="event-photo" :class="{ 'event-photo-graphic': !event.image }" :aria-label="`Lihat ${event.name}`">
                 <img v-if="event.image" :src="event.image" :style="{ objectPosition: event.image_position || 'center' }" :alt="`Dokumentasi ${event.name}`" loading="lazy" width="640" height="460" />
-                <span v-else class="graphic-event-title">INI RUN<br><em>FEST.</em></span>
+                <span v-else class="graphic-event-title">YOUR RACE.<br><em>IDLAPS.</em></span>
                 <span class="image-badge">{{ event.sport }}</span><span class="card-arrow"><ArrowUpRight :size="20" /></span>
             </a>
-            <div class="event-card-meta"><span>{{ event.date }}</span><span>EVENT SELESAI</span></div>
+            <div class="event-card-meta"><span>{{ event.date }}</span><span>{{ event.status_label }}</span></div>
             <h3><a :href="event.url">{{ event.name }}</a></h3>
             <p class="location"><MapPin :size="13" aria-hidden="true" /> {{ event.location }}</p>
         </article>
@@ -41,7 +42,7 @@ function reset() { query.value = ''; sport.value = ''; year.value = ''; }
     <div v-else class="result-event-list">
         <article v-for="event in filtered" :key="event.slug" class="result-event-row">
             <img v-if="event.image" :src="event.image" :style="{ objectPosition: event.image_position || 'center' }" :alt="`Dokumentasi ${event.name}`" class="result-event-image" width="120" height="80" loading="lazy" />
-            <div v-else class="result-event-image event-photo-graphic" aria-hidden="true">INI RUN.</div>
+            <div v-else class="result-event-image event-photo-graphic" aria-hidden="true">IDLAPS.</div>
             <div class="result-event-content"><p class="eyebrow">{{ event.sport }} / {{ event.date }}</p><h3><a :href="event.url">{{ event.name }}</a></h3><p class="location"><MapPin :size="13" aria-hidden="true" /> {{ event.location }}</p></div>
             <span class="result-event-year">{{ event.year }}</span><a :href="event.result_url" target="_blank" rel="noopener" class="button button-outline" :aria-label="`Buka hasil ${event.name} di tab baru`">Lihat hasil <ArrowUpRight :size="16" /></a>
         </article>

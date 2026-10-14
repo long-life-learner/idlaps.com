@@ -1,6 +1,7 @@
 @extends('layouts.site')
-@section('title', $event['name'].' — Event IDLAPS')
-@section('description', $event['description'])
+@section('title', e($event['name'].' — Event IDLAPS'))
+@section('description', e(Str::limit($event['description'], 160)))
+@section('og_image', e($event['image'] ? url($event['image']) : asset('media/bukit-batu.jpg')))
 @section('content')
 <section class="event-detail-hero {{ !$event['image'] ? 'event-detail-graphic' : '' }}">
     @if($event['image'])<img class="event-detail-cover" src="{{ $event['image'] }}" alt="Dokumentasi {{ $event['name'] }}" style="object-position: {{ $event['image_position'] ?? 'center' }}">@endif

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Event;
 use App\Support\EventCatalogue;
 use Illuminate\Contracts\View\View;
 
@@ -13,7 +14,7 @@ class WebsiteController extends Controller
     {
         return view('home', [
             'events' => $this->catalogue->all()->where('featured', true)->take(3),
-            'articles' => $this->catalogue->all()->whereNotNull('article_url'),
+            'articles' => $this->catalogue->all()->whereNotNull('article_url')->take(2),
         ]);
     }
 
@@ -35,6 +36,13 @@ class WebsiteController extends Controller
     public function demo(): View
     {
         return view('result-demo');
+    }
+
+    public function article(string $slug): View
+    {
+        $record = Event::query()->where('published', true)->where('article_published', true)->where('slug', $slug)->firstOrFail();
+
+        return view('article', ['record' => $record, 'event' => $record->catalogueEntry()]);
     }
 
     public function news(): View

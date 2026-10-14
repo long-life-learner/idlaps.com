@@ -2,22 +2,29 @@
 
 namespace Tests\Feature;
 
+use App\Models\Event;
+use Database\Seeders\EventSeeder;
+use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use PHPUnit\Framework\Attributes\TestWith;
 use Tests\TestCase;
 
 class WebsiteTest extends TestCase
 {
+    use LazilyRefreshDatabase;
+
     #[TestWith(['/event', 'INI RUN FEST 2026'])]
     #[TestWith(['/hasil', 'https://inirun.idlaps.com/'])]
     #[TestWith(['/berita', 'Cosmo Run 2026'])]
     #[TestWith(['/konsultasi', 'admin@idlaps.com'])]
     public function test_public_pages_render_useful_content_without_javascript(string $path, string $content): void
     {
+        $this->seed(EventSeeder::class);
         $this->get($path)->assertOk()->assertSee($content);
     }
 
     public function test_event_page_links_to_the_correct_official_result(): void
     {
+        $this->seed(EventSeeder::class);
         $this->get('/event/ini-run-fest-2026')
             ->assertOk()
             ->assertSee('AEON Mall Deltamas, Cikarang')
@@ -26,6 +33,7 @@ class WebsiteTest extends TestCase
 
     public function test_event_without_results_does_not_invent_a_result_link(): void
     {
+        $this->seed(EventSeeder::class);
         $this->get('/event/bukit-batu-2023')
             ->assertOk()
             ->assertSee('Tautan hasil event ini belum tersedia')
@@ -62,9 +70,7 @@ class WebsiteTest extends TestCase
 
     public function test_event_title_and_serialized_data_are_escaped(): void
     {
-        $event = config('idlaps.events.0');
-        $event['name'] = '<script>alert("unsafe")</script>';
-        config(['idlaps.events' => [$event]]);
+        $event = Event::factory()->create(['name' => '<script>alert("unsafe")</script>', 'published' => true]);
 
         $this->get('/event')->assertOk()
             ->assertSee($event['name'])

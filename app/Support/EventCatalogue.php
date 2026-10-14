@@ -2,24 +2,19 @@
 
 namespace App\Support;
 
+use App\Models\Event;
 use Illuminate\Support\Collection;
 
 class EventCatalogue
 {
     public function all(): Collection
     {
-        return collect(config('idlaps.events'))->map(fn (array $event): array => [
-            ...$event,
-            'url' => route('events.show', $event['slug']),
-        ]);
+        return Event::query()->where('published', true)->orderByDesc('year')->orderByDesc('event_date')->orderByDesc('id')
+            ->get()->map(fn (Event $event): array => $event->catalogueEntry());
     }
 
     public function find(string $slug): array
     {
-        $event = $this->all()->firstWhere('slug', $slug);
-
-        abort_unless($event, 404);
-
-        return $event;
+        return Event::query()->where('published', true)->where('slug', $slug)->firstOrFail()->catalogueEntry();
     }
 }

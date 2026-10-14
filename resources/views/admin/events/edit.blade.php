@@ -1,0 +1,42 @@
+@extends('layouts.admin')
+@section('title', e($event->exists ? 'Kelola '.$event->name : 'Tambah event'))
+@section('content')
+<a class="back-link" href="{{ route('admin.events.index') }}">← Event & berita</a>
+<div class="page-heading"><div><p class="eyebrow">{{ $event->exists ? 'EVENT EDITOR' : 'CERITA BARU' }}</p><h1>{{ $event->exists ? $event->name : 'Tambahkan event.' }}</h1><p>Isi informasi, tambahkan foto, lalu tentukan kapan konten siap terbit.</p></div>@if($event->exists)<a class="button secondary" href="{{ route('admin.events.preview', $event) }}" target="_blank" rel="noopener">Pratinjau tersimpan ↗</a>@endif</div>
+<form id="event-editor" data-editor method="POST" enctype="multipart/form-data" action="{{ $event->exists ? route('admin.events.update', $event) : route('admin.events.store') }}">
+@csrf @if($event->exists) @method('PUT') <input type="hidden" name="revision" value="{{ old('revision', $event->revision) }}"> @endif
+<div class="editor-grid"><div class="editor-sections">
+<section class="panel" id="informasi"><div class="section-title"><span>01</span><div><h2>Informasi event</h2><p>Informasi ini menjadi dasar halaman event dan draf artikel.</p></div></div>
+<label>Nama event <span class="required">*</span><input name="name" required maxlength="200" value="{{ old('name', $event->name) }}" placeholder="Contoh: IDLAPS City Run 2026"></label>
+<div class="field-grid"><label>Olahraga<select name="sport">@foreach(['Running', 'Cycling', 'Triathlon', 'Multisport', 'Lainnya'] as $sport)<option @selected(old('sport', $event->sport) === $sport)>{{ $sport }}</option>@endforeach</select></label><label>Kategori<input name="categories_text" value="{{ old('categories_text', implode(', ', $event->categories ?? [])) }}" maxlength="500" placeholder="5K, 10K, Half marathon"><small>Pisahkan dengan koma.</small></label></div>
+<div class="field-grid"><label>Tanggal event<input type="date" name="event_date" value="{{ old('event_date', $event->event_date?->format('Y-m-d')) }}"><small>Boleh kosong jika hanya tahun yang diketahui.</small></label><label>Tahun <span class="required">*</span><input type="number" name="year" min="2000" max="2100" required value="{{ old('year', $event->year) }}"></label></div>
+<label>Lokasi <span class="required">*</span><input name="location" required maxlength="255" value="{{ old('location', $event->location) }}" placeholder="Venue, kota"></label>
+<label>Ringkasan event <span class="required">*</span><textarea name="description" required maxlength="3000" rows="4" placeholder="Ceritakan singkat event dan layanan IDLAPS yang digunakan.">{{ old('description', $event->description) }}</textarea><small>Gunakan informasi yang sudah terkonfirmasi. Ditampilkan di halaman event.</small></label>
+<label>Tautan hasil lomba<input type="url" name="result_url" maxlength="2048" value="{{ old('result_url', $event->result_url) }}" placeholder="https://namaevent.idlaps.com/"><small>Kosongkan jika hasil belum tersedia.</small></label>
+</section>
+<section class="panel" id="foto"><div class="section-title"><span>02</span><div><h2>Foto &amp; galeri</h2><p>Foto pertama menjadi cover awal. Setelah tersimpan, Anda bisa mengganti cover dan keterangannya.</p></div></div>
+<label class="upload-zone">＋ Tambahkan foto<input id="photos" type="file" name="photos[]" accept="image/jpeg,image/png,image/webp" multiple><small>JPG, PNG, WebP · Maksimal 10 foto per unggahan, 8 MB per foto. Batas hosting juga berlaku.</small></label><p id="upload-feedback" class="hint" role="status"></p><div id="upload-previews" class="upload-previews"></div>
+@if($event->gallery)<div class="photo-editor-grid">@foreach($event->gallery as $photo)<div class="photo-editor"><img src="{{ $photo['image'] }}" alt="{{ $photo['alt'] }}" loading="lazy"><label class="inline-check"><input type="radio" name="cover_id" value="{{ $photo['id'] }}" @checked(old('cover_id', $event->cover_id) === $photo['id'])> Jadikan cover</label><label>Keterangan<textarea name="captions[{{ $photo['id'] }}]" rows="2" maxlength="500">{{ old('captions.'.$photo['id'], $photo['caption']) }}</textarea></label><label>Deskripsi foto (alt)<input name="alt_texts[{{ $photo['id'] }}]" required maxlength="255" value="{{ old('alt_texts.'.$photo['id'], $photo['alt']) }}"></label><label class="inline-check remove-check"><input type="checkbox" name="remove_photos[]" value="{{ $photo['id'] }}" @checked(in_array($photo['id'], old('remove_photos', [])))> Lepas dari galeri</label></div>@endforeach</div>@endif
+<label>Fokus vertikal cover<input type="range" name="image_focus" min="0" max="100" value="{{ old('image_focus', $event->image_focus) }}"><small>Geser ke kiri untuk bagian atas foto; kanan untuk bagian bawah.</small></label>
+</section>
+<section class="panel" id="artikel"><div class="section-title"><span>03</span><div><h2>Artikel / berita</h2><p>Draf otomatis dirangkai dari informasi event menggunakan templat. Anda tetap memeriksa dan menyunting isinya.</p></div></div>
+@if(!$event->exists)<div class="notice">Simpan event terlebih dahulu. Draf artikel akan dibuat otomatis dan bisa diedit di sini.</div>@else
+<label>Judul artikel<input name="article_title" maxlength="255" value="{{ old('article_title', $event->article_title) }}"></label>
+<label>Isi artikel<textarea name="article_body" rows="12" maxlength="30000" placeholder="Buat draf dari informasi event atau tulis cerita Anda di sini.">{{ old('article_body', $event->article_body) }}</textarea><small>Teks biasa. Pisahkan paragraf dengan baris kosong.</small></label>
+<div class="article-actions"><button class="button secondary" name="action" value="generate" @if($event->article_body) data-confirm="Buat ulang draf dari informasi event? Isi artikel saat ini akan diganti dan artikel kembali menjadi draf." @endif>{{ $event->article_body ? 'Buat ulang draf otomatis ↻' : 'Buat draf otomatis ↻' }}</button><a href="{{ route('admin.events.article-preview', $event) }}" target="_blank" rel="noopener">Pratinjau artikel tersimpan ↗</a></div>
+<p class="hint">Membuat ulang draf juga menyimpan perubahan event dan foto pada formulir ini.</p>
+@endif
+@if($event->legacy_article_url)<label>Tautan liputan lama<input name="legacy_article_url" type="url" maxlength="2048" value="{{ old('legacy_article_url', $event->legacy_article_url) }}"><small>Dipakai sampai artikel CMS diterbitkan. Artikel CMS yang terbit akan menjadi tautan utama.</small></label>@endif
+</section></div>
+<aside class="editor-sidebar"><section class="panel publish-panel"><p class="eyebrow">PUBLIKASI</p><h2>Siap dibagikan?</h2><p>Simpan sebagai draf sampai informasi dan foto siap.</p>
+<input type="hidden" name="published" value="0"><label class="toggle-row"><input type="checkbox" name="published" value="1" @checked(old('published', $event->published))><span>Terbitkan event<small>Tampil di katalog website.</small></span></label>
+<input type="hidden" name="featured" value="0"><label class="toggle-row"><input type="checkbox" name="featured" value="1" @checked(old('featured', $event->featured))><span>Pilihan beranda<small>Tiga event terbit terbaru yang ditandai akan tampil.</small></span></label>
+<input type="hidden" name="article_published" value="0">@if($event->exists)<label class="toggle-row"><input type="checkbox" name="article_published" value="1" @checked(old('article_published', $event->article_published))><span>Terbitkan artikel<small>Judul dan isi wajib diisi. Event juga harus terbit.</small></span></label>@endif
+<button class="button wide" name="action" value="save">Simpan perubahan <span>→</span></button><p class="hint" id="save-hint">Perubahan diterapkan setelah Anda menyimpan.</p>
+@if($event->exists)<div class="permalink"><small>Alamat halaman</small><code>/event/{{ $event->slug }}</code></div>@endif
+</section>
+<div class="editor-nav"><a href="#informasi">01 / Informasi</a><a href="#foto">02 / Foto &amp; galeri</a><a href="#artikel">03 / Artikel</a></div>
+</aside></div></form>
+<div class="mobile-save-bar"><span>EVENT EDITOR</span><button class="button" type="submit" form="event-editor" name="action" value="save">Simpan perubahan →</button></div>
+@if($event->exists)<form method="POST" action="{{ route('admin.events.destroy', $event) }}" class="archive-form" data-confirm="Arsipkan event ini? Event dan artikelnya akan disembunyikan dari website dan bisa dipulihkan kembali.">@csrf @method('DELETE')<span>Event tidak ingin ditampilkan lagi?</span><button class="text-button danger">Pindahkan ke arsip</button></form>@endif
+@endsection

@@ -6,14 +6,14 @@
     <meta name="theme-color" content="#101210">
     <title>@yield('title', 'IDLAPS — Race Timing untuk Setiap Format Event')</title>
     <meta name="description" content="@yield('description', 'Layanan race timing untuk lari, sepeda, dan triathlon di seluruh Indonesia, dilengkapi BIB dan chip, registrasi, serta hasil lomba. Sesuaikan kebutuhan event Anda bersama IDLAPS.')">
-    <meta name="robots" content="{{ config('idlaps.indexable') && !request()->routeIs('results.demo') ? 'index, follow' : 'noindex, nofollow' }}">
+    <meta name="robots" content="{{ config('idlaps.indexable') && !request()->routeIs('results.demo', 'admin.*') ? 'index, follow' : 'noindex, nofollow' }}">
     <link rel="canonical" href="{{ url()->current() }}">
     <meta property="og:title" content="@yield('title', 'IDLAPS — Setiap Detik Berarti')">
-    <meta property="og:description" content="Race timing yang menyesuaikan event Anda. Dari garis start sampai hasil akhir.">
-    <meta property="og:type" content="website">
+    <meta property="og:description" content="@yield('description', 'Race timing yang menyesuaikan event Anda. Dari garis start sampai hasil akhir.')">
+    <meta property="og:type" content="@yield('og_type', 'website')">
     <meta property="og:locale" content="id_ID">
     <meta property="og:url" content="{{ url()->current() }}">
-    <meta property="og:image" content="{{ asset('media/bukit-batu.jpg') }}">
+    <meta property="og:image" content="@yield('og_image', asset('media/bukit-batu.jpg'))">
     <link rel="icon" type="image/svg+xml" href="{{ asset('favicon.svg?v=2') }}">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
@@ -37,7 +37,9 @@
             <a href="{{ route('home') }}#layanan">Layanan <x-icon /></a><a href="{{ route('events.index') }}">Event <x-icon /></a><a href="{{ route('results.index') }}">Hasil lomba <x-icon /></a><a href="{{ route('news.index') }}">Berita <x-icon /></a><a href="{{ route('home') }}#tentang">Tentang kami <x-icon /></a><a href="{{ route('contact') }}">Konsultasi event <x-icon /></a>
         </nav>
     </header>
-    <main id="main">@yield('content')</main>
+    <main id="main">@if($preview ?? false)<div class="cms-preview-notice">PRATINJAU ADMIN · Belum tentu tampil di website. <a href="{{ route('admin.events.edit', $record->id ?? request()->route('event')->id) }}">Kembali ke editor →</a></div>
+    @endif
+    @yield('content')</main>
     <footer class="site-footer">
         <div class="shell footer-top"><a href="{{ route('home') }}" class="brand"><img src="{{ asset('media/idlaps-logo-updated.jpeg') }}" alt="IDLAPS" width="1600" height="800" loading="lazy"></a><p>Your race. Your format.<br><span>Our commitment.</span></p><a href="mailto:{{ config('idlaps.contact_email') }}">{{ config('idlaps.contact_email') }} <x-icon /></a></div>
         <div class="shell footer-bottom"><span>© {{ date('Y') }} IDLAPS Timing System.</span><span>Bukit Batu JPG MTB Trail Park · Indonesia</span><a href="{{ route('results.index') }}">Temukan hasil lomba <x-icon name="arrow-right" /></a></div>
