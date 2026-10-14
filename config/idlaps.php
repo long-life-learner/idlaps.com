@@ -60,6 +60,15 @@ return [
             'result_url' => 'https://jpm.idlaps.com/', 'article_url' => null, 'featured' => false,
         ],
         [
+            'slug' => 'bhayangkara-run-2025', 'name' => 'Bhayangkara Run 2025', 'sport' => 'Running', 'year' => '2025', 'date' => '22 Juni 2025',
+            'location' => 'Tugu Adipura, Bandar Lampung', 'image' => '/media/bhayangkara-run-2025-finisher.jpg', 'image_position' => 'center 18%', 'categories' => ['10K'],
+            'description' => 'Bhayangkara Run 2025 berlangsung pada 22 Juni 2025 di Tugu Adipura, Bandar Lampung. Lihat dokumentasi peserta dan akses hasil lomba melalui halaman result IDLAPS.',
+            'gallery' => [
+                ['image' => '/media/bhayangkara-run-2025-finisher.jpg', 'alt' => 'Dokumentasi peserta dan sertifikat finisher Bhayangkara Run 2025', 'caption' => 'Momen peserta Bhayangkara Run 2025 di Bandar Lampung.'],
+            ],
+            'result_url' => 'https://bhayangkararun2025.idlaps.com/', 'article_url' => null, 'featured' => false,
+        ],
+        [
             'slug' => 'anniversarace-5-tahun-jonggol-bersepeda-2025', 'name' => 'ANNIVERSARACE 5 TAHUN JONGGOL BERSEPEDA', 'sport' => 'Cycling', 'year' => '2025', 'date' => '25 Mei 2025',
             'location' => 'Jonggol, Bogor', 'image' => '/media/jonggol-anniversarace-2025-start.jpg', 'image_position' => 'center 65%', 'categories' => ['Sepeda'],
             'description' => 'ANNIVERSARACE 5 TAHUN JONGGOL BERSEPEDA berlangsung pada 25 Mei 2025 di Jonggol, Bogor. Dokumentasi event menampilkan suasana lintasan dan perangkat pencatatan waktu di area lomba.',
