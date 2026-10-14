@@ -1,4 +1,4 @@
-name: Staging checks and release package
+name: Deploy staging
 
 on:
   push:
@@ -12,7 +12,7 @@ permissions:
 
 concurrency:
   group: staging-build-${{ github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   test:
@@ -57,7 +57,7 @@ jobs:
       - uses: shivammathur/setup-php@d52fc211a0436f8839a587b3b5b8efddab4744ea # v2
         with:
           php-version: '8.3'
-          extensions: mbstring, intl, pdo_mysql, fileinfo, zip
+          extensions: mbstring, intl, pdo_sqlite, pdo_mysql, fileinfo, zip
           coverage: none
           tools: composer:v2
       - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
@@ -68,6 +68,8 @@ jobs:
       - run: npm run build
       - name: Build cPanel package without local secrets or data
         run: bash .github/deploy/build-release.sh "$RUNNER_TEMP/idlaps-release"
+      - name: Verify release activation and persistence
+        run: python3 .github/deploy/test_release.py "$RUNNER_TEMP/idlaps-release/idlaps-staging.zip"
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: idlaps-staging-${{ github.sha }}
@@ -76,7 +78,7 @@ jobs:
             ${{ runner.temp }}/idlaps-release/idlaps-staging.zip.sha256
           if-no-files-found: error
           retention-days: 14
-      - name: Upload package over explicit FTPS
+      - name: Deploy over explicit FTPS and wait for activation
         if: vars.STAGING_FTP_ENABLED == 'true'
         env:
           FTP_HOST: bintang.indowebsite.net
@@ -84,6 +86,7 @@ jobs:
           FTP_USERNAME: staging@idlaps.com
           FTP_DIRECTORY: /
           FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+          STAGING_DB_PASSWORD: ${{ secrets.STAGING_DB_PASSWORD }}
         run: python3 .github/deploy/upload-package.py "$RUNNER_TEMP/idlaps-release/idlaps-staging.zip"
       - name: Report pending hosting setup
         if: vars.STAGING_FTP_ENABLED != 'true'
