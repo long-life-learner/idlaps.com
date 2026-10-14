@@ -79,7 +79,7 @@ jobs:
       - name: Upload package over explicit FTPS
         if: vars.STAGING_FTP_ENABLED == 'true'
         env:
-          FTP_HOST: ftp.idlaps.com
+          FTP_HOST: bintang.indowebsite.net
           FTP_PORT: '21'
           FTP_USERNAME: staging@idlaps.com
           FTP_DIRECTORY: /
