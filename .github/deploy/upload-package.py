@@ -55,10 +55,12 @@ def main() -> None:
             template = template.replace('APP_KEY=\n', 'APP_KEY=' + key + '\n')
             template = template.replace('DB_PASSWORD=\n', 'DB_PASSWORD=' + dotenv_value(database_password) + '\n')
             upload(ftp, '.env', template.encode(), private=True)
+        for template in ['production-index.php', 'production.htaccess']:
+            upload(ftp, template, (Path('.github/deploy') / template).read_bytes())
         upload(ftp, 'activate-release.php', Path('.github/deploy/activate-release.php').read_bytes())
         content = package.read_bytes()
         upload(ftp, 'incoming/idlaps-' + release + '.zip', content)
-        manifest = json.dumps({'release': release, 'sha256': hashlib.sha256(content).hexdigest()}).encode()
+        manifest = json.dumps({'release': release, 'sha256': hashlib.sha256(content).hexdigest(), 'target': os.environ.get('DEPLOY_TARGET', 'staging')}).encode()
         upload(ftp, 'incoming/pending.json', manifest, private=True)
         print('Release uploaded. Waiting for the cPanel cron to activate it.', flush=True)
         deadline = time.monotonic() + 480

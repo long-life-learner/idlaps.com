@@ -30,6 +30,11 @@ try {
     if (! is_string($job['sha256'] ?? null) || ! hash_equals($job['sha256'], hash_file('sha256', $archive))) {
         throw new RuntimeException('Release checksum mismatch.');
     }
+    $isProduction = ($job['target'] ?? 'staging') === 'production';
+    $productionRoot = dirname($base, 2).'/public_html';
+    if ($isProduction && (basename(dirname($base)) !== 'idlaps.com' || ! is_dir($productionRoot) || ! is_writable($productionRoot))) {
+        throw new RuntimeException('Production document root is unavailable.');
+    }
     $target = $base.'/releases/'.$release;
     if (file_exists($target)) {
         throw new RuntimeException('Release already exists. Dispatch a fresh workflow attempt.');
@@ -68,6 +73,14 @@ try {
     if (! symlink($base.'/storage', $target.'/storage') || ! symlink($base.'/.env', $target.'/.env')) {
         throw new RuntimeException('Cannot link shared storage or environment.');
     }
+    if ($isProduction) {
+        $environment = file_get_contents($base.'/.env');
+        $environment = preg_replace('/^APP_URL=.*$/m', 'APP_URL=https://idlaps.com', $environment);
+        $environment = preg_replace('/^SITE_INDEXABLE=.*$/m', 'SITE_INDEXABLE=true', $environment);
+        file_put_contents($base.'/.env.next', $environment);
+        chmod($base.'/.env.next', 0600);
+        rename($base.'/.env.next', $base.'/.env');
+    }
     chdir($target);
     require $target.'/vendor/autoload.php';
     $app = require $target.'/bootstrap/app.php';
@@ -102,6 +115,34 @@ try {
     }
     if (! symlink($target.'/public', $base.'/public-next-'.$release) || ! rename($base.'/public-next-'.$release, $public)) {
         throw new RuntimeException('Cannot activate release.');
+    }
+    if ($isProduction) {
+        $backup = $base.'/production-backups/'.$release;
+        mkdir($backup, 0700, true);
+        foreach (['build', 'media', 'favicon.ico', 'favicon.svg', 'robots.txt'] as $asset) {
+            $destination = $productionRoot.'/'.$asset;
+            $source = $public.'/'.$asset;
+            if (is_link($destination) && readlink($destination) === $source) {
+                continue;
+            }
+            if (file_exists($destination) || is_link($destination)) {
+                if (! rename($destination, $backup.'/'.$asset)) {
+                    throw new RuntimeException('Cannot back up public asset: '.$asset);
+                }
+            }
+            if (! symlink($source, $destination)) {
+                throw new RuntimeException('Cannot link public asset: '.$asset);
+            }
+        }
+        foreach (['index.php' => 'production-index.php', '.htaccess' => 'production.htaccess'] as $filename => $template) {
+            $destination = $productionRoot.'/'.$filename;
+            if (is_file($destination)) {
+                copy($destination, $backup.'/'.$filename);
+            }
+            if (! copy($base.'/'.$template, $destination.'.next') || ! rename($destination.'.next', $destination)) {
+                throw new RuntimeException('Cannot update production entry point: '.$filename);
+            }
+        }
     }
     $result = ['release' => $release, 'status' => 'success', 'php' => PHP_VERSION];
     file_put_contents($base.'/incoming/result.json', json_encode($result, JSON_THROW_ON_ERROR));

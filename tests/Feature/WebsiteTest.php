@@ -59,6 +59,14 @@ class WebsiteTest extends TestCase
         $this->get('/')->assertOk()->assertSee('content="index, follow"', false);
     }
 
+    public function test_staging_host_stays_unindexed_when_production_indexing_is_enabled(): void
+    {
+        config(['idlaps.indexable' => true, 'app.url' => 'https://idlaps.com']);
+
+        $this->get('https://staging.idlaps.com/')->assertOk()->assertSee('content="noindex, nofollow"', false);
+        $this->get('https://idlaps.com/')->assertOk()->assertSee('content="index, follow"', false);
+    }
+
     public function test_demo_remains_unindexed_and_labelled_even_when_production_is_indexable(): void
     {
         config(['idlaps.indexable' => true]);

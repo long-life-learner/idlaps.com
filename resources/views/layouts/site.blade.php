@@ -6,7 +6,7 @@
     <meta name="theme-color" content="#101210">
     <title>@yield('title', 'IDLAPS — Race Timing untuk Setiap Format Event')</title>
     <meta name="description" content="@yield('description', 'Layanan race timing untuk lari, sepeda, dan triathlon di seluruh Indonesia, dilengkapi BIB dan chip, registrasi, serta hasil lomba. Sesuaikan kebutuhan event Anda bersama IDLAPS.')">
-    <meta name="robots" content="{{ config('idlaps.indexable') && !request()->routeIs('results.demo', 'admin.*') ? 'index, follow' : 'noindex, nofollow' }}">
+    <meta name="robots" content="{{ config('idlaps.indexable') && request()->getHost() === parse_url(config('app.url'), PHP_URL_HOST) && !request()->routeIs('results.demo', 'admin.*') ? 'index, follow' : 'noindex, nofollow' }}">
     <link rel="canonical" href="{{ url()->current() }}">
     <meta property="og:title" content="@yield('title', 'IDLAPS — Setiap Detik Berarti')">
     <meta property="og:description" content="@yield('description', 'Race timing yang menyesuaikan event Anda. Dari garis start sampai hasil akhir.')">

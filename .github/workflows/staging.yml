@@ -1,4 +1,4 @@
-name: Deploy staging
+name: Deploy IDLAPS
 
 on:
   push:
@@ -81,6 +81,7 @@ jobs:
       - name: Deploy over explicit FTPS and wait for activation
         if: vars.STAGING_FTP_ENABLED == 'true'
         env:
+          DEPLOY_TARGET: production
           FTP_HOST: bintang.indowebsite.net
           FTP_PORT: '21'
           FTP_USERNAME: staging@idlaps.com

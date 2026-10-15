@@ -22,10 +22,19 @@ DEPLOY = Path(__file__).resolve().parent
 class ReleaseActivationTest(unittest.TestCase):
     def test_activation_preserves_cms_data_and_rejects_corrupt_packages(self):
         with tempfile.TemporaryDirectory(prefix='idlaps-deploy-test-') as directory:
-            base = Path(directory).resolve()
+            base = Path(directory).resolve() / 'idlaps.com' / 'staging'
+            base.mkdir(parents=True)
             (base / 'incoming').mkdir()
             (base / 'public').mkdir()
             shutil.copyfile(DEPLOY / 'activate-release.php', base / 'activate-release.php')
+            for template in ['production-index.php', 'production.htaccess']:
+                shutil.copyfile(DEPLOY / template, base / template)
+            production = base.parent.parent / 'public_html'
+            production.mkdir()
+            (production / 'index.php').write_text('old entry point')
+            (production / '.htaccess').write_text('old rewrite rules')
+            (production / 'media').mkdir()
+            (production / 'media/old-photo.txt').write_text('legacy image')
             database = base / 'database.sqlite'
             database.touch()
             environment = '\n'.join([
@@ -40,10 +49,10 @@ class ReleaseActivationTest(unittest.TestCase):
                 revision = archive.read('REVISION').decode().strip()
             checksum = hashlib.sha256(PACKAGE.read_bytes()).hexdigest()
 
-            def activate(attempt, digest=checksum):
+            def activate(attempt, digest=checksum, target='staging'):
                 release = revision + '-1-' + str(attempt)
                 shutil.copyfile(PACKAGE, base / 'incoming' / ('idlaps-' + release + '.zip'))
-                (base / 'incoming/pending.json').write_text(json.dumps({'release': release, 'sha256': digest}))
+                (base / 'incoming/pending.json').write_text(json.dumps({'release': release, 'sha256': digest, 'target': target}))
                 command_environment = {key: value for key, value in os.environ.items() if not key.startswith(('APP_', 'DB_', 'CACHE_', 'SESSION_', 'QUEUE_'))}
                 result = subprocess.run(['php', str(base / 'activate-release.php')], capture_output=True, text=True, env=command_environment)
                 return result, release
@@ -84,6 +93,20 @@ class ReleaseActivationTest(unittest.TestCase):
             self.assertNotEqual(rejected.returncode, 0)
             self.assertFalse((base / 'releases/outside.txt').exists())
             self.assertEqual((base / 'public').resolve(), base / 'releases' / second / 'public')
+
+            result, promoted = activate(5, target='production')
+            self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertIn('staging/public/index.php', (production / 'index.php').read_text())
+            self.assertEqual((production / 'media').resolve(), base / 'releases' / promoted / 'public/media')
+            backup = base / 'production-backups' / promoted
+            self.assertEqual((backup / 'index.php').read_text(), 'old entry point')
+            self.assertEqual((backup / 'media/old-photo.txt').read_text(), 'legacy image')
+            self.assertIn('APP_URL=https://idlaps.com', (base / '.env').read_text())
+            self.assertIn('SITE_INDEXABLE=true', (base / '.env').read_text())
+            result, latest = activate(6, target='production')
+            self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertEqual((production / 'media').resolve(), base / 'releases' / latest / 'public/media')
+            self.assertEqual(photo.read_text(), 'existing upload')
 
             spec = importlib.util.spec_from_file_location('upload', DEPLOY / 'upload-package.py')
             upload = importlib.util.module_from_spec(spec)
