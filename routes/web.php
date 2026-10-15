@@ -11,10 +11,12 @@ Route::get('/event', [WebsiteController::class, 'events'])->name('events.index')
 Route::get('/event/{slug}', [WebsiteController::class, 'event'])->name('events.show');
 Route::get('/hasil', [WebsiteController::class, 'results'])->name('results.index');
 Route::get('/hasil/demo', [WebsiteController::class, 'demo'])->name('results.demo');
-Route::get('/berita', [WebsiteController::class, 'news'])->name('news.index');
+Route::get('/cerita', [WebsiteController::class, 'news'])->name('news.index');
+Route::get('/berita', [WebsiteController::class, 'news']);
 Route::view('/konsultasi', 'contact')->name('contact');
 
-Route::get('/berita/{slug}', [WebsiteController::class, 'article'])->name('news.show');
+Route::get('/cerita/{slug}', [WebsiteController::class, 'article'])->name('news.show');
+Route::get('/berita/{slug}', [WebsiteController::class, 'article']);
 Route::get('/event-media/{event}/{filename}', EventMediaController::class)->where('filename', '[A-Za-z0-9]+\\.(jpg|jpeg|png|webp)')->name('event-media');
 
 Route::middleware('guest')->group(function (): void {

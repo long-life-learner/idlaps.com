@@ -15,6 +15,7 @@ class WebsiteTest extends TestCase
     #[TestWith(['/event', 'INI RUN FEST 2026'])]
     #[TestWith(['/hasil', 'https://inirun.idlaps.com/'])]
     #[TestWith(['/berita', 'Cosmo Run 2026'])]
+    #[TestWith(['/cerita', 'Cosmo Run 2026'])]
     #[TestWith(['/konsultasi', 'admin@idlaps.com'])]
     public function test_public_pages_render_useful_content_without_javascript(string $path, string $content): void
     {
@@ -38,6 +39,16 @@ class WebsiteTest extends TestCase
             ->assertOk()
             ->assertSee('Tautan hasil event ini belum tersedia')
             ->assertDontSee('Lihat hasil lomba');
+    }
+
+    public function test_cms_articles_use_their_own_path_and_keep_drafts_private(): void
+    {
+        $published = Event::factory()->create(['published' => true, 'article_published' => true, 'article_body' => 'Cerita dari garis start.']);
+        $draft = Event::factory()->create(['published' => true, 'article_published' => false]);
+
+        $this->get('/cerita')->assertOk()->assertSee('/cerita/'.$published->slug);
+        $this->get('/cerita/'.$published->slug)->assertOk()->assertSee('Cerita dari garis start.');
+        $this->get('/cerita/'.$draft->slug)->assertNotFound();
     }
 
     public function test_unknown_event_returns_not_found(): void
