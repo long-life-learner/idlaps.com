@@ -41,7 +41,7 @@
     @endif
     @yield('content')</main>
     <footer class="site-footer">
-        <div class="shell footer-top"><a href="{{ route('home') }}" class="brand"><img src="{{ asset('media/idlaps-logo-updated.jpeg') }}" alt="IDLAPS" width="1600" height="800" loading="lazy"></a><p>Your race. Your format.<br><span>Our commitment.</span></p><a href="mailto:{{ config('idlaps.contact_email') }}">{{ config('idlaps.contact_email') }} <x-icon /></a></div>
+        <div class="shell footer-top"><a href="{{ route('home') }}" class="brand"><img src="{{ asset('media/idlaps-logo-updated.jpeg') }}" alt="IDLAPS" width="1600" height="800" loading="lazy"></a><p>Your race. Your format.<br><span>Our commitment.</span></p><a href="mailto:{{ config('idlaps.contact_email') }}?cc={{ rawurlencode(config('idlaps.contact_cc')) }}">{{ config('idlaps.contact_email') }} <x-icon /></a></div>
         <div class="shell footer-bottom"><span>© {{ date('Y') }} IDLAPS Timing System.</span><span>Bukit Batu JPG MTB Trail Park · Indonesia</span><a href="{{ route('results.index') }}">Temukan hasil lomba <x-icon name="arrow-right" /></a></div>
     </footer>
     @stack('scripts')

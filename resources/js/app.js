@@ -8,7 +8,7 @@ if (directory) createApp(EventDirectory, { events: window.idlapsEvents || [], mo
 const results = document.querySelector('[data-component="race-results"]');
 if (results) createApp(RaceResults).mount(results);
 const contact = document.querySelector('[data-component="contact-form"]');
-if (contact) createApp(ContactForm, { email: contact.dataset.email }).mount(contact);
+if (contact) createApp(ContactForm, { email: contact.dataset.email, cc: contact.dataset.cc }).mount(contact);
 
 const menu = document.querySelector('.menu-toggle');
 const mobileNav = document.querySelector('#mobile-nav');

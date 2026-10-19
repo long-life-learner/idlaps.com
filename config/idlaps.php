@@ -3,6 +3,7 @@
 return [
     'indexable' => env('SITE_INDEXABLE', false),
     'contact_email' => 'admin@idlaps.com',
+    'contact_cc' => 'imanuddin@idlaps.com',
     'events' => [
         [
             'slug' => 'kopi-toebroek-69-xcm-50k-2026', 'name' => 'Kopi Toebroek 69 XCM 50K Race', 'sport' => 'Cycling', 'year' => '2026', 'date' => '16 Agustus 2026',
